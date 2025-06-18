@@ -28,6 +28,29 @@ def index(request):
     return render(request, 'index.html', informacion_template)
 
 
+def ver_paises(request):
+    paises = Pais.objects.all()
+    numero_paises = len(paises)
+    informacion_template = {'paises': paises, 'numero_paises': numero_paises}
+    return render(request, 'ver_paises.html', informacion_template)
+
+def crear_pais(request):
+    """
+    """
+    print(request)
+    if request.method=='POST':
+        formulario = PaisForm(request.POST)
+        print(formulario.errors)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect(ver_paises)
+    else:
+        formulario = PaisForm()
+    diccionario = {'formulario': formulario}
+
+    return render(request, 'crearPais.html', diccionario)
+
+
 def obtener_estudiante(request, id):
     """
         Listar los registros del modelo Estudiante,
