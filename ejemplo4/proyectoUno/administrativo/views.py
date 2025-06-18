@@ -7,7 +7,7 @@ from django.shortcuts import render
 from administrativo.models import *
 
 # importar los formularios de forms.py
-from administrativo.forms import *
+from .forms import *
 
 # Create your views here.
 
