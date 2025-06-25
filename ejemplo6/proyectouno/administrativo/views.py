@@ -7,6 +7,7 @@ from django.shortcuts import render
 from administrativo.models import Matricula, Estudiante
 from administrativo.forms import MatriculaForm, MatriculaEditForm
 
+
 # vista que permita presesentar las matriculas
 # el nombre de la vista es index.
 
@@ -14,10 +15,12 @@ def index(request):
     """
     """
     matriculas = Matricula.objects.all()
-
+    estudiantes = Estudiante.objects.all()
     titulo = "Listado de matriculas"
+
     informacion_template = {'matriculas': matriculas,
-    'numero_matriculas': len(matriculas), 'mititulo': titulo}
+                            'numero_matriculas': len(matriculas), 'mititulo': titulo, 'estudiantes': estudiantes,
+                            'mititulo2': "Listado de estudiantes", 'numero_estudiantes': len(estudiantes)}
     return render(request, 'index.html', informacion_template)
 
 
@@ -34,17 +37,18 @@ def detalle_matricula(request, id):
 def crear_matricula(request):
     """
     """
-    if request.method=='POST':
+    if request.method == 'POST':
         formulario = MatriculaForm(request.POST)
         print(formulario.errors)
         if formulario.is_valid():
-            formulario.save() # se guarda en la base de datos
+            formulario.save()  # se guarda en la base de datos
             return redirect(index)
     else:
         formulario = MatriculaForm()
     diccionario = {'formulario': formulario}
 
     return render(request, 'crear_matricula.html', diccionario)
+
 
 def editar_matricula(request, id):
     """
@@ -53,7 +57,7 @@ def editar_matricula(request, id):
     print("----------matricula")
     print(matricula)
     print("----------matricula")
-    if request.method=='POST':
+    if request.method == 'POST':
         formulario = MatriculaEditForm(request.POST, instance=matricula)
         print(formulario.errors)
         if formulario.is_valid():
@@ -64,6 +68,7 @@ def editar_matricula(request, id):
     diccionario = {'formulario': formulario}
 
     return render(request, 'crear_matricula.html', diccionario)
+
 
 def detalle_estudiante(request, id):
     """

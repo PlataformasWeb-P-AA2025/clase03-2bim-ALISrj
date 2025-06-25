@@ -26,7 +26,12 @@ class Estudiante(models.Model):
 
     def obtener_matriculas(self):
         return self.lasmatriculas.all()
-        
+
+    def calcular_monto_total(self):
+        total = 0
+        for m in self.obtener_matriculas():
+            total += m.costo
+        return total
 
 class Modulo(models.Model):
     """
@@ -55,8 +60,10 @@ class Matricula(models.Model):
             on_delete=models.CASCADE)
     modulo = models.ForeignKey(Modulo, related_name='lasmatriculas',
             on_delete=models.CASCADE)
+    costo = models.DecimalField(max_digits=10, decimal_places=2)
     comentario = models.CharField(max_length=200)
 
     def __str__(self):
         return "Matricula: Estudiante(%s) - Modulo(%s)" % \
                 (self.estudiante, self.modulo.nombre)
+
