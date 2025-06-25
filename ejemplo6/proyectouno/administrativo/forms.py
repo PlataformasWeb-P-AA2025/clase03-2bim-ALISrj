@@ -3,11 +3,11 @@ from django import forms
 
 from administrativo.models import Matricula
 
+
 class MatriculaForm(ModelForm):
     class Meta:
         model = Matricula
-        fields = ['estudiante', 'modulo', 'comentario']
-
+        fields = ['estudiante', 'modulo', 'costo', 'comentario']
 
 
 class MatriculaEditForm(ModelForm):
@@ -21,10 +21,10 @@ class MatriculaEditForm(ModelForm):
 
     class Meta:
         model = Matricula
-        fields = ['estudiante', 'modulo', 'comentario']
+        fields = ['estudiante', 'modulo', 'costo', 'comentario']
         widgets = {
             'comentario': forms.Textarea(attrs={
                 'rows': 4,
                 'cols': 40,
                 'placeholder': 'Escribe aquí tu comentario...'
-            }),}
+            }), }
